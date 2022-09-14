@@ -1,0 +1,3 @@
+Scalar: São tipos primitivos, quando necessário adicionar algum que o GraphQL não contemple,
+é necessário inclui-lo dentro do typeDefs com a `chave` scalar.
+

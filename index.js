@@ -1,10 +1,13 @@
 import { ApolloServer, gql } from 'apollo-server';
 
 const typeDefs = gql`
+  scalar Date
+
   # API entrance
   type Query {
     today: String
     timeNow: String
+    date: Date
   }
 `;
 
@@ -17,6 +20,9 @@ const resolvers = {
     timeNow() {
       const date = new Date();
       return date.toLocaleTimeString('pt-BR');
+    },
+    date() {
+      return new Date();
     },
   },
 };
