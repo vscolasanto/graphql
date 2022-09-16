@@ -17,12 +17,20 @@ const typeDefs = gql`
     vip: Boolean
   }
 
+  type Produto {
+    nome: String!
+    preco: Float!
+    desconto: Float
+    precoComDesconto: String
+  }
+
   # API entrance
   type Query {
     today: String!
     timeNow: String!
     date: Date!
     usuarioLogado: Usuario
+    produtoEmDestaque: Produto
   }
 `;
 
@@ -33,6 +41,11 @@ const resolvers = {
     },
     salarioComImposto(user) {
       return currencyBRL(user.salarioReal * 1.272);
+    },
+  },
+  Produto: {
+    precoComDesconto(produto) {
+      return currencyBRL(produto.preco - produto.preco * (produto.desconto / 100));
     },
   },
   Query: {
@@ -55,6 +68,13 @@ const resolvers = {
         idade: 18,
         salarioReal: 22970.43,
         vip: true,
+      };
+    },
+    produtoEmDestaque() {
+      return {
+        nome: 'Playstation 5',
+        preco: 5900.9,
+        desconto: 10,
       };
     },
   },
