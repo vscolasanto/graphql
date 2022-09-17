@@ -6,6 +6,11 @@ const currencyBRL = (value) => {
   return value.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
 };
 
+const roles = [
+  { id: 1, description: 'Common' },
+  { id: 2, description: 'Admin' },
+];
+
 const user = () => ({
   id: faker.datatype.uuid(),
   name: `${faker.name.firstName()} ${faker.name.lastName()}`,
@@ -35,6 +40,11 @@ const generateUser = () => {
 const typeDefs = gql`
   scalar Date
 
+  type Role {
+    id: Int
+    description: String
+  }
+
   type User {
     id: ID
     name: String!
@@ -62,6 +72,8 @@ const typeDefs = gql`
     lotteryNumbers: [Int!]!
     getUsers: [User!]!
     getUser(id: ID): User
+    getRoles: [Role!]!
+    getRole(id: Int): Role
   }
 `;
 
@@ -125,6 +137,12 @@ const resolvers = {
     getUser(_, { id }) {
       const found = generateUser().find((user) => user.id === id);
       return found;
+    },
+    getRoles() {
+      return roles;
+    },
+    getRole(_, { id }) {
+      return roles.find((role) => role.id === id) || null;
     },
   },
 };
