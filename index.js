@@ -6,7 +6,7 @@ const currencyBRL = (value) => {
   return value.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
 };
 
-const generateUser = () => ({
+const user = () => ({
   id: faker.datatype.uuid(),
   name: `${faker.name.firstName()} ${faker.name.lastName()}`,
   email: faker.internet.email(),
@@ -15,6 +15,22 @@ const generateUser = () => ({
   taxSalary: faker.finance.amount(27000, 35000, 2),
   vip: faker.datatype.boolean(),
 });
+
+const generateUser = () => {
+  const fixedUser = {
+    id: 'qar512as-23rwer-12tdsgr',
+    name: `Bernardo Silva`,
+    email: 'bernardao@email.com',
+    age: 19,
+    realSalary: 19000,
+    taxSalary: 21000,
+    vip: true,
+  };
+
+  let users = [];
+  Array.from({ length: 50 }).forEach(() => users.push(user()));
+  return [...users, fixedUser];
+};
 
 const typeDefs = gql`
   scalar Date
@@ -45,6 +61,7 @@ const typeDefs = gql`
     featuredProduct: Product
     lotteryNumbers: [Int!]!
     getUsers: [User!]!
+    getUser(id: ID): User
   }
 `;
 
@@ -103,9 +120,11 @@ const resolvers = {
         .sort((a, b) => a - b);
     },
     getUsers() {
-      let users = [];
-      Array.from({ length: 50 }).forEach(() => users.push(generateUser()));
-      return users;
+      return generateUser();
+    },
+    getUser(_, { id }) {
+      const found = generateUser().find((user) => user.id === id);
+      return found;
     },
   },
 };
