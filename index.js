@@ -19,6 +19,7 @@ const user = () => ({
   realSalary: faker.finance.amount(21000, 25000, 2),
   taxSalary: faker.finance.amount(27000, 35000, 2),
   vip: faker.datatype.boolean(),
+  roleId: faker.datatype.number({ min: 1, max: 2 }),
 });
 
 const generateUser = () => {
@@ -30,6 +31,7 @@ const generateUser = () => {
     realSalary: 19000,
     taxSalary: 21000,
     vip: true,
+    roleId: 2,
   };
 
   let users = [];
@@ -53,6 +55,7 @@ const typeDefs = gql`
     salary: String
     taxSalary: String
     vip: Boolean
+    role: Role
   }
 
   type Product {
@@ -84,6 +87,10 @@ const resolvers = {
     },
     taxSalary(user) {
       return currencyBRL(user.realSalary * 1.272);
+    },
+    role(user) {
+      console.log(user);
+      return roles.find((role) => role.id === user.roleId) || null;
     },
   },
   Product: {
