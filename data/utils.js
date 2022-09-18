@@ -1,5 +1,7 @@
 const { faker } = require('@faker-js/faker');
 
+const status = ['ACTIVE', 'INACTIVE', 'BLOCKED'];
+
 const currencyBRL = (value) => {
   return value.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
 };
@@ -18,6 +20,7 @@ const user = () => ({
   taxSalary: faker.finance.amount(27000, 35000, 2),
   vip: faker.datatype.boolean(),
   roleId: faker.datatype.number({ min: 1, max: 2 }),
+  status: status[Math.floor(Math.random() * Object.keys(status).length)],
 });
 
 const generateUser = () => {
@@ -30,6 +33,7 @@ const generateUser = () => {
     taxSalary: 21000,
     vip: true,
     roleId: 2,
+    status: 'ACTIVE',
   };
 
   let users = [];
