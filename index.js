@@ -1,4 +1,5 @@
 import { ApolloServer, gql } from 'apollo-server';
+import { importSchema } from 'graphql-import';
 import { faker } from '@faker-js/faker';
 faker.locale = 'pt_BR';
 
@@ -38,47 +39,6 @@ const generateUser = () => {
   Array.from({ length: 50 }).forEach(() => users.push(user()));
   return [...users, fixedUser];
 };
-
-const typeDefs = gql`
-  scalar Date
-
-  type Role {
-    id: Int
-    description: String
-  }
-
-  type User {
-    id: ID
-    name: String!
-    email: String!
-    age: Int
-    salary: String
-    taxSalary: String
-    vip: Boolean
-    role: Role
-  }
-
-  type Product {
-    name: String!
-    price: Float!
-    discount: Float
-    discountPrice: String
-  }
-
-  # API entrance
-  type Query {
-    today: String!
-    timeNow: String!
-    date: Date!
-    loggedUser: User
-    featuredProduct: Product
-    lotteryNumbers: [Int!]!
-    getUsers: [User!]!
-    getUser(id: ID): User
-    getRoles: [Role!]!
-    getRole(id: Int): Role
-  }
-`;
 
 const resolvers = {
   User: {
@@ -154,7 +114,7 @@ const resolvers = {
   },
 };
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({ typeDefs: importSchema('./schema/index.graphql'), resolvers });
 
 server.listen().then(({ url }) => {
   console.log(`server is running on ${url}`);

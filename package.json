@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon"
+    "start": "nodemon --ext js,graphql"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +13,8 @@
   "dependencies": {
     "@faker-js/faker": "^7.5.0",
     "apollo-server": "^2.4.8",
-    "graphql": "^14.2.1"
+    "graphql": "^14.2.1",
+    "graphql-import": "^1.0.2"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"

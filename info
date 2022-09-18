@@ -3,3 +3,9 @@ Scalar: São tipos primitivos, quando necessário adicionar algum que o GraphQL 
 
 Resolvers: Utilizados para mapear propriedades diferentes entre o tipo do graphQL com o tipo recebido.
 Também e possível criar resolver combinando métodos/atributos.
+
+Podemos criar um FRAGMENT para reutilizar dados em pesquisas, por exemplo:
+fragment fullUser on User { id name email age salary taxSalary vip role { id description } }
+e utiliza-lo:
+getUsers { ...fullUser }
+getUser (id: "qar512as-23rwer-12tdsgr") { ...fullUser }

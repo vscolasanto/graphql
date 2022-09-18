@@ -1,0 +1,5 @@
+#import Role, User from 'user.graphql'
+#import Product from 'product.graphql'
+#import Query from 'query.graphql'
+
+scalar Date

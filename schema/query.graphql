@@ -1,0 +1,13 @@
+# API entrance
+type Query {
+  today: String!
+  timeNow: String!
+  date: Date!
+  loggedUser: User
+  featuredProduct: Product
+  lotteryNumbers: [Int!]!
+  getUsers: [User!]!
+  getUser(id: ID): User
+  getRoles: [Role!]!
+  getRole(id: Int): Role
+}
